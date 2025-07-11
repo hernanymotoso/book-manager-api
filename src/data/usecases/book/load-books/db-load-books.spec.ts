@@ -56,4 +56,10 @@ describe('DbLoadBooks UseCase', () => {
     await sut.load()
     expect(loadAllSpy).toHaveBeenCalled()
   })
+
+  it('should return a list of books on success', async () => {
+    const { sut } = makeSut()
+    const books = await sut.load()
+    expect(books).toEqual(makeBookModels())
+  })
 })
