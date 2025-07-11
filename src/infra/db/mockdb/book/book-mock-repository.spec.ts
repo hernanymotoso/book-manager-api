@@ -28,5 +28,16 @@ describe('Book Mock Repository ', () => {
       expect(mockDb.books[0].title).toBe('any_title')
       expect(mockDb.books[0].author).toBe('any_author')
     })
+
+    it('should add a book and return it', async () => {
+      const sut = makeSut()
+
+      const book = await sut.add({
+        title: 'any_title',
+        author: 'any_author'
+      })
+
+      expect(book.id).toBeTruthy()
+    })
   })
 })
