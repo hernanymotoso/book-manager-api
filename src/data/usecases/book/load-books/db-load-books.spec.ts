@@ -62,4 +62,12 @@ describe('DbLoadBooks UseCase', () => {
     const books = await sut.load()
     expect(books).toEqual(makeBookModels())
   })
+
+  it('should throw if LoadBooksRepository throws', async () => {
+    const { sut, loadBooksRepositoryStub } = makeSut()
+    jest.spyOn(loadBooksRepositoryStub, 'loadAll')
+      .mockImplementationOnce(async () => await new Promise((resolve, reject) => { reject(new Error()) }))
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow()
+  })
 })
