@@ -2,6 +2,7 @@ import { BookModel } from '../../../../domain/models/book'
 import { LoadBooks } from '../../../../domain/usecases/book/load-books'
 import MockDate from 'mockdate'
 import { LoadBooksController } from './load-books-controller'
+import { ok } from '../../../helpers/http-helpers'
 
 const makeBookModels = (): BookModel[] => {
   return [{
@@ -58,5 +59,11 @@ describe('LoadBooks Controller', () => {
     const loadSty = jest.spyOn(loadBooksStub, 'load')
     await sut.handle({})
     expect(loadSty).toHaveBeenCalled()
+  })
+
+  it('should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(ok(makeBookModels()))
   })
 })
