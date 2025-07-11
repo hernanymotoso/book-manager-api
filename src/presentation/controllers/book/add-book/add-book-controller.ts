@@ -8,11 +8,11 @@ export class AddBookController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.title) {
-        return badRequest(new MissingParamError('title'))
-      }
-      if (!httpRequest.body.author) {
-        return badRequest(new MissingParamError('author'))
+      const requiredFields = ['title', 'author']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
       }
       const book = await this.addBook.add(httpRequest.body)
       return ok(book)
