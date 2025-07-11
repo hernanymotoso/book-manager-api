@@ -1,8 +1,6 @@
-import { BookModel } from '../../../../domain/models/book'
-import { AddBookParams } from '../../../../domain/usecases/book/add-book'
-import { AddBookRepository } from '../../../protocols/db/book/add-book-repository'
 import { DbAddBook } from './db-add-book'
 import MockDate from 'mockdate'
+import { AddBookParams, AddBookRepository, BookModel } from './db-add-book-protocols'
 
 const makeAddBookParams = (): AddBookParams => ({
   title: 'any_title',

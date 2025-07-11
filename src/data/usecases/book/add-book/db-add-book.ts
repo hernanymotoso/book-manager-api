@@ -1,6 +1,4 @@
-import { BookModel } from '../../../../domain/models/book'
-import { AddBook, AddBookParams } from '../../../../domain/usecases/book/add-book'
-import { AddBookRepository } from '../../../protocols/db/book/add-book-repository'
+import { AddBook, AddBookParams, AddBookRepository, BookModel } from './db-add-book-protocols'
 
 export class DbAddBook implements AddBook {
   constructor (private readonly addBookRepository: AddBookRepository) {}
