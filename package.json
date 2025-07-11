@@ -4,5 +4,30 @@
   "main": "index.js",
   "repository": "git@github.com:hernanymotoso/book-manager-api.git",
   "author": "Hernany Motoso <hernanymotoso@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+   "scripts": {
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "npm test -- --watch -c jest-unit.config.ts",
+    "test:integration": "npm test -- --watch -c jest-integration.config.ts",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "eslint": "8.43.0",
+    "eslint-config-standard-with-typescript": "^35.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "git-commit-msg-linter": "^5.0.8",
+    "husky": "^9.1.7",
+    "jest": "^30.0.3",
+    "lint-staged": "^16.1.2",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
