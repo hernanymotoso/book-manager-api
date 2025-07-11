@@ -1,5 +1,5 @@
 import { LoadBooks } from '../../../../domain/usecases/book/load-books'
-import { ok } from '../../../helpers/http-helpers'
+import { noContent, ok } from '../../../helpers/http-helpers'
 import { Controller, HttpRequest, HttpResponse } from '../../../protocols'
 
 export class LoadBooksController implements Controller {
@@ -7,6 +7,6 @@ export class LoadBooksController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const books = await this.loadBooks.load()
-    return ok(books)
+    return books.length ? ok(books) : noContent()
   }
 }
