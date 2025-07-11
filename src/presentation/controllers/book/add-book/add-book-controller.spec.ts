@@ -1,6 +1,6 @@
 import MockDate from 'mockdate'
 import { AddBookController } from './add-book-controller'
-import { badRequest } from '../../../helpers/http-helpers'
+import { badRequest, serverError } from '../../../helpers/http-helpers'
 import { MissingParamError } from '../../../errors'
 import { AddBook, AddBookParams } from '../../../../domain/usecases/book/add-book'
 import { BookModel } from '../../../../domain/models/book'
@@ -81,5 +81,19 @@ describe('AddBook Controller', () => {
       title: 'any_title',
       author: 'any_author'
     })
+  })
+
+  it('should return 500 if AddBook throws', async () => {
+    const { sut, addBookStub } = makeSut()
+    jest.spyOn(addBookStub, 'add')
+      .mockImplementationOnce(async () => { return await new Promise((resolve, reject) => { reject(new Error()) }) })
+    const httpRequest = {
+      body: {
+        title: 'any_title',
+        author: 'any_author'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(serverError())
   })
 })
