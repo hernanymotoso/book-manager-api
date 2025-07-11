@@ -1,6 +1,6 @@
 import MockDate from 'mockdate'
 import { AddBookController } from './add-book-controller'
-import { badRequest, serverError } from '../../../helpers/http-helpers'
+import { badRequest, ok, serverError } from '../../../helpers/http-helpers'
 import { MissingParamError } from '../../../errors'
 import { AddBook, AddBookParams } from '../../../../domain/usecases/book/add-book'
 import { BookModel } from '../../../../domain/models/book'
@@ -95,5 +95,22 @@ describe('AddBook Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError())
+  })
+
+  it('should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        title: 'any_title',
+        author: 'any_author'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(ok({
+      id: 'valid_id',
+      title: 'valid_title',
+      author: 'valid_author',
+      createdAt: new Date().getTime()
+    }))
   })
 })
