@@ -7,5 +7,8 @@ export class AddBookController implements Controller {
     if (!httpRequest.body.title) {
       return badRequest(new MissingParamError('title'))
     }
+    if (!httpRequest.body.author) {
+      return badRequest(new MissingParamError('author'))
+    }
   }
 }
