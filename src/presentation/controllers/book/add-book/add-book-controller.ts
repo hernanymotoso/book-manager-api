@@ -1,6 +1,6 @@
 import { AddBook } from '../../../../domain/usecases/book/add-book'
 import { MissingParamError } from '../../../errors'
-import { badRequest, serverError } from '../../../helpers/http-helpers'
+import { badRequest, ok, serverError } from '../../../helpers/http-helpers'
 import { Controller, HttpRequest, HttpResponse } from '../../../protocols'
 
 export class AddBookController implements Controller {
@@ -14,7 +14,8 @@ export class AddBookController implements Controller {
       if (!httpRequest.body.author) {
         return badRequest(new MissingParamError('author'))
       }
-      await this.addBook.add(httpRequest.body)
+      const book = await this.addBook.add(httpRequest.body)
+      return ok(book)
     } catch (error) {
       return serverError()
     }
