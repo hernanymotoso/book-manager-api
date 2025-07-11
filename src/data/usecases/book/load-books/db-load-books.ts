@@ -4,7 +4,7 @@ export class DbLoadBooks implements LoadBooks {
   constructor (private readonly loadBooksRepository: LoadBooksRepository) {}
 
   async load (): Promise<BookModel[]> {
-    await this.loadBooksRepository.loadAll()
-    return null
+    const books = await this.loadBooksRepository.loadAll()
+    return books
   }
 }
