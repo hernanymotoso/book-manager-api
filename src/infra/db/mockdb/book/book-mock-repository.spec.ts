@@ -76,5 +76,11 @@ describe('Book Mock Repository ', () => {
       expect(mockDb.books[0].title).toBe('any_title')
       expect(mockDb.books[0].author).toBe('any_author')
     })
+
+    it('should load empty list', async () => {
+      const sut = makeSut()
+      const books = await sut.loadAll()
+      expect(books.length).toBe(0)
+    })
   })
 })
