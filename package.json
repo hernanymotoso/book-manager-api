@@ -1,0 +1,8 @@
+{
+  "name": "book-manager-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:hernanymotoso/book-manager-api.git",
+  "author": "Hernany Motoso <hernanymotoso@gmail.com>",
+  "license": "MIT"
+}
