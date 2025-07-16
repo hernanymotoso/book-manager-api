@@ -6,7 +6,9 @@
   "author": "Hernany Motoso <hernanymotoso@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "build": "tsc",
+    "start": "node dist/main/server.js",
+    "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.ts",
