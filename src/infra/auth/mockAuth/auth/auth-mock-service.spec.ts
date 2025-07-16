@@ -20,4 +20,11 @@ describe('Auth Mock Service', () => {
     const isValid = await sut.validate('invalid_token')
     expect(isValid).toBe(false)
   })
+
+  it('should return false when token is not provided', async () => {
+    const sut = new AuthMockService()
+    jest.spyOn(authMock, 'verifyToken').mockReturnValueOnce(Promise.resolve(false))
+    const isValid = await sut.validate('')
+    expect(isValid).toBe(false)
+  })
 })
