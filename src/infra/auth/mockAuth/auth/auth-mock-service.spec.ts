@@ -1,4 +1,5 @@
 import { AuthMockService } from './auth-mock-service'
+import { authMock } from '../helpers/auth-mock-helper'
 
 jest.mock('../helpers/auth-mock-helper', () => ({
   authMock: {
@@ -11,5 +12,12 @@ describe('Auth Mock Service', () => {
     const sut = new AuthMockService()
     const isValid = await sut.validate('valid_token')
     expect(isValid).toBe(true)
+  })
+
+  it('should return false if token is invalid', async () => {
+    const sut = new AuthMockService()
+    jest.spyOn(authMock, 'verifyToken').mockReturnValueOnce(Promise.resolve(false))
+    const isValid = await sut.validate('invalid_token')
+    expect(isValid).toBe(false)
   })
 })
