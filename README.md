@@ -45,12 +45,13 @@ The application will be available at `http://localhost:5050`.
   - Issue: https://github.com/hernanymotoso/book-manager-api/issues/2
   - PR: https://github.com/hernanymotoso/book-manager-api/pull/6
   
-- ⌛90% Load Books
+- ✅ Load Books
   - Issue: https://github.com/hernanymotoso/book-manager-api/issues/3
   - PR: https://github.com/hernanymotoso/book-manager-api/pull/7
     
-- ❌ Auth Middleware
+- ✅ Auth Middleware
   - Issue: https://github.com/hernanymotoso/book-manager-api/issues/4
+  - PR: https://github.com/hernanymotoso/book-manager-api/pull/8
 
  
 ## Decisions
