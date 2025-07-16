@@ -2,7 +2,7 @@ import { BookModel } from '../../../../domain/models/book'
 import { LoadBooks } from '../../../../domain/usecases/book/load-books'
 import MockDate from 'mockdate'
 import { LoadBooksController } from './load-books-controller'
-import { noContent, ok } from '../../../helpers/http-helpers'
+import { noContent, ok, serverError } from '../../../helpers/http-helpers'
 
 const makeBookModels = (): BookModel[] => {
   return [{
@@ -73,5 +73,13 @@ describe('LoadBooks Controller', () => {
       .mockReturnValueOnce(Promise.resolve([]))
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(noContent())
+  })
+
+  it('should return 500 if LoadBooks throws', async () => {
+    const { sut, loadBooksStub } = makeSut()
+    jest.spyOn(loadBooksStub, 'load')
+      .mockImplementationOnce(async () => await new Promise((resolve, reject) => { reject(new Error()) }))
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(serverError())
   })
 })
