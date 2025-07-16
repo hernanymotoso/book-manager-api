@@ -13,6 +13,15 @@ describe('Book Routes', () => {
         })
         .expect(200)
     })
+
+    it('should return 403 on add book without accessToken', async () => {
+      await request(app).post('/api/books')
+        .send({
+          title: 'any_title',
+          author: 'any_author'
+        })
+        .expect(403)
+    })
   })
 
   describe('Get /books', () => {
