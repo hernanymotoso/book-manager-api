@@ -1,6 +1,6 @@
 import { ValidateUserToken } from '../../domain/usecases/user/validate-user-token'
 import { AccessDeniedError } from '../errors'
-import { forbidden, ok } from '../helpers/http-helpers'
+import { forbidden, ok, serverError } from '../helpers/http-helpers'
 import { HttpRequest } from '../protocols'
 import { AuthMiddleware } from './auth-middleware'
 
@@ -52,5 +52,13 @@ describe('Auth Middleware', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(ok({}))
+  })
+
+  it('should return 500 if ValidateUserToken throws', async () => {
+    const { sut, validateUserTokenStub } = makeSut()
+    jest.spyOn(validateUserTokenStub, 'validate')
+      .mockImplementationOnce(async () => await new Promise((resolve, reject) => { reject(new Error()) }))
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError())
   })
 })
