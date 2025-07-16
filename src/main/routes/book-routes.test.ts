@@ -36,5 +36,9 @@ describe('Book Routes', () => {
 
       await request(app).get('/api/books').set('x-access-token', accessToken).expect(200)
     })
+
+    it('should return 403 on load books without accessToken', async () => {
+      await request(app).get('/api/books').expect(403)
+    })
   })
 })
