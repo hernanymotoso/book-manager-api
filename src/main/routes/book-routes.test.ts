@@ -12,4 +12,16 @@ describe('Book Routes', () => {
         .expect(200)
     })
   })
+
+  describe('Get /books', () => {
+    it('should return 200 when get books', async () => {
+      await request(app).post('/api/books')
+        .send({
+          title: 'any_title',
+          author: 'any_author'
+        })
+
+      await request(app).get('/api/books').expect(200)
+    })
+  })
 })
