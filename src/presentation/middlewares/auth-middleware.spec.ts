@@ -1,7 +1,14 @@
 import { ValidateUserToken } from '../../domain/usecases/user/validate-user-token'
 import { AccessDeniedError } from '../errors'
 import { forbidden } from '../helpers/http-helpers'
+import { HttpRequest } from '../protocols'
 import { AuthMiddleware } from './auth-middleware'
+
+const mockRequest = (): HttpRequest => ({
+  headers: {
+    'x-access-token': 'any_token'
+  }
+})
 
 const makeValidateUserToken = (): ValidateUserToken => {
   class ValidateUserTokenStub implements ValidateUserToken {
@@ -32,5 +39,12 @@ describe('Auth Middleware', () => {
     jest.spyOn(validateUserTokenStub, 'validate').mockReturnValueOnce(Promise.resolve(false))
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+
+  it('should call ValidateUserToken with correct accessToken', async () => {
+    const { sut, validateUserTokenStub } = makeSut()
+    const validateSpy = jest.spyOn(validateUserTokenStub, 'validate')
+    await sut.handle(mockRequest())
+    expect(validateSpy).toHaveBeenCalledWith('any_token')
   })
 })
