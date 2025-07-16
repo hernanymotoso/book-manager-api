@@ -5,8 +5,10 @@ import { HttpRequest, HttpResponse, Middleware } from '../protocols'
 
 export class AuthMiddleware implements Middleware {
   constructor (private readonly validateUserToken: ValidateUserToken) {}
+
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const isValid = await this.validateUserToken.validate('')
+    const accessToken = httpRequest.headers?.['x-access-token']
+    const isValid = await this.validateUserToken.validate(accessToken)
     if (isValid) {
       return ok({})
     }
