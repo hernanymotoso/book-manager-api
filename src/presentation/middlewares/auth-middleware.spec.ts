@@ -1,6 +1,6 @@
 import { ValidateUserToken } from '../../domain/usecases/user/validate-user-token'
 import { AccessDeniedError } from '../errors'
-import { forbidden } from '../helpers/http-helpers'
+import { forbidden, ok } from '../helpers/http-helpers'
 import { HttpRequest } from '../protocols'
 import { AuthMiddleware } from './auth-middleware'
 
@@ -46,5 +46,11 @@ describe('Auth Middleware', () => {
     const validateSpy = jest.spyOn(validateUserTokenStub, 'validate')
     await sut.handle(mockRequest())
     expect(validateSpy).toHaveBeenCalledWith('any_token')
+  })
+
+  it('should return 200 if ValidateUserToken returns true', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok({}))
   })
 })
